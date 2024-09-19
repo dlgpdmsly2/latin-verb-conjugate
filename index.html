@@ -39,7 +39,7 @@
         });         
 
         waitForElm('.table').then((elm) => {
-            document.getElementById('result-container').innerHTML = elm[0].rows[person].cell.innerText;
+            document.getElementById('result-container').innerHTML = elm[0].rows[person].cell[1].innerText;
         });
     </script>
 </head>
