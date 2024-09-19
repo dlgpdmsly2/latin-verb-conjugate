@@ -3,22 +3,23 @@
 <head>
     <script src="https://verbix-api.nyc3.cdn.digitaloceanspaces.com/conjugator/v2.0.2.js"></script>
     <script>
-        function conjugate() {
-            verbix.conjugate('amo');
-        }
-        document.addEventListener('DOMContentLoaded', (event) => {
-            conjugate('amo');
-        });
         const params = new Proxy(new URLSearchParams(window.location.search), {
           get: (searchParams, prop) => searchParams.get(prop),
         });
-        // Get the value of "verb" in eg "https://example.com/?verb=some_value"
-        let value = params.verb; // "some_value"
-        console.log(value);
+        let verb = params.verb;
+        let tense = params.tense;
+        console.log(verb);
+        console.log(tense);
+        function conjugate() {
+            verbix.conjugate(verb);
+        }
+        document.addEventListener('DOMContentLoaded', (event) => {
+            conjugate();
+        });
     </script>
 </head>
 <body>
     <div data-verbix-conjugate-language='lat' data-verbix-conjugate-key='ab8e7bb5-9ac6-11e7-ab6a-00089be4dcbc'></div>
-    <div data-verbix-conjugate-tense='0'></div>
+    <div data-verbix-conjugate-tense=tense></div>
 </body>
 </html>
