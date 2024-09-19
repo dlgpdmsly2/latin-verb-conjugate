@@ -38,9 +38,9 @@
             document.getElementById('tense-container').setAttribute('data-verbix-conjugate-tense', tense);
         });
 
-        waitForElm('.table').then((elm) => {
-            document.getElementById('result-container').innerHTML = document.getElementsByTagName('table')[0].rows[person].cells[1].innerText;
-        });         
+        // waitForElm('.table').then((elm) => {
+        //     document.getElementById('result-container').innerHTML = document.getElementsByTagName('table')[0].rows[person].cells[1].innerText;
+        // });         
 
     </script>
 </head>
@@ -48,5 +48,8 @@
     <div data-verbix-conjugate-language='lat' data-verbix-conjugate-key='ab8e7bb5-9ac6-11e7-ab6a-00089be4dcbc'></div>
     <div id='tense-container' data-verbix-conjugate-tense='0'></div>
     <p id='result-container'></p>
+    <script>
+        document.getElementById('result-container').innerHTML = document.getElementsByTagName('table')[0].rows[person].cells[1].innerText;
+    </script>
 </body>
 </html>
