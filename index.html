@@ -8,18 +8,17 @@
         });
         let verb = params.verb;
         let tense = params.tense;
-        console.log(verb);
-        console.log(tense);
         function conjugate() {
             verbix.conjugate(verb);
         }
         document.addEventListener('DOMContentLoaded', (event) => {
             conjugate();
+            document.getElementById('tense-container').setAttribute('data-verbix-conjugate-tense', tense);
         });
     </script>
 </head>
 <body>
     <div data-verbix-conjugate-language='lat' data-verbix-conjugate-key='ab8e7bb5-9ac6-11e7-ab6a-00089be4dcbc'></div>
-    <div data-verbix-conjugate-tense=tense></div>
+    <div id='tense-container' data-verbix-conjugate-tense='0'></div>
 </body>
 </html>
