@@ -9,6 +9,12 @@
         document.addEventListener('DOMContentLoaded', (event) => {
             conjugate('amo');
         });
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+          get: (searchParams, prop) => searchParams.get(prop),
+        });
+        // Get the value of "verb" in eg "https://example.com/?verb=some_value"
+        let value = params.verb; // "some_value"
+        console.log(value);
     </script>
 </head>
 <body>
