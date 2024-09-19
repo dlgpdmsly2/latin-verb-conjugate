@@ -12,11 +12,36 @@
         function conjugate() {
             verbix.conjugate(verb);
         }
+
+        function waitForElm(selector) {
+            return new Promise(resolve => {
+                if (document.querySelector(selector)) {
+                    return resolve(document.querySelector(selector));
+                }
+        
+                const observer = new MutationObserver(mutations => {
+                    if (document.querySelector(selector)) {
+                        observer.disconnect();
+                        resolve(document.querySelector(selector));
+                    }
+                });
+        
+                observer.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
+            });
+        }
+        
         document.addEventListener('DOMContentLoaded', (event) => {
             conjugate();
             document.getElementById('tense-container').setAttribute('data-verbix-conjugate-tense', tense);
-            document.getElementById('result-container').innerHTML = document.getElementsByTagName('table')[0].rows[person].cells[1].innerText;
         });
+
+        waitForElm('.table').then((elm) => {
+            document.getElementById('result-container').innerHTML = document.getElementsByTagName('table')[0].rows[person].cells[1].innerText;
+        });         
+
     </script>
 </head>
 <body>
