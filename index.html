@@ -1,52 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://content-api.verbix.com/conjugator/v2.0.2.js"></script>
+    <script src="https://content-api.verbix.com/conjugator/v2.0.2.js"></script> <!-- load Verbix API script -->
     <script>
+        
+        // get URL parameters
         const params = new Proxy(new URLSearchParams(window.location.search), {
-          get: (searchParams, prop) => searchParams.get(prop),
+          get: (searchParams, prop) => searchParams.get(prop), // searchParams: object, prop: property
         });
-        let verb = params.verb;
-        let tense = params.tense;
-        let person = params.person;
+
+        // declare JS variables e.g. for 'website.com?verb=amo+tense=0+person=1+noun=',
+        let verb = params.verb; // verb=amo
+        let tense = params.tense; // tense=0
+        let person = params.person; // person=1
+        let noun = params.noun;
+        
+        // function that calls the API's conjugate function from the verb in the URL parameter
         function conjugate() {
-            verbix.conjugate(verb);
+            verbix.conjugate(verb); // verb passed in as parameter
         }
 
-        function waitForElm(selector) {
-            return new Promise(resolve => {
-                if (document.querySelector(selector)) {
+        // function that waits for a specific HTML component to appear in the DOM (Document Object Model)
+        function waitForElm(selector) { // it takes a specific CSS class selector as a parameter
+            return new Promise(resolve => { // function returns a Promise that takes another function 'resolve' as a parameter
+    
+                if (document.querySelector(selector)) { // if selector found, return resolve promise
                     return resolve(document.querySelector(selector));
                 }
         
-                const observer = new MutationObserver(mutations => {
-                    if (document.querySelector(selector)) {
+                const observer = new MutationObserver(mutations => { // set up mutationOberver
+                    if (document.querySelector(selector)) { // if selector found, return resolve promise
                         observer.disconnect();
                         resolve(document.querySelector(selector));
                     }
                 });
         
-                observer.observe(document.documentElement, {
-                    childList: true,
-                    subtree: true
+                observer.observe(document.documentElement, { // observer options
+                    childList: true, // observe changes to direct children of elemtn
+                    subtree: true // observe changes to whole subtree i.e. entire DOM subtre
                 });
             });
         }
         
         document.addEventListener('DOMContentLoaded', (event) => {
             conjugate();
-            document.getElementById('tense-container').setAttribute('data-verbix-conjugate-tense', tense);
-        });         
-
-        waitForElm('.verbtense').then((elm) => {
-            document.getElementById('result-container').innerHTML = elm.rows[person].cells[1].innerText;
+            if (noun) {
+                document.getElementById("verbixConjugations").setAttribute("data-verbix-conjugator-verb", noun);
+            }
+            else {
+                document.getElementById('tense-container').setAttribute('data-verbix-conjugate-tense', tense);
+            }
         });
+
+        if (noun) {
+            waitForElm('.verbtense').then((elm) => {
+                document.getElementById('result-container').innerHTML = elm[tense].rows[person].cells[1].innerText;
+            });
+        }
+        else {
+            waitForElm('.verbtense').then((elm) => {
+                document.getElementById('result-container').innerHTML = elm.rows[person].cells[1].innerText;
+            });
+        }
+        
+        
     </script>
 </head>
 <body>
     <div data-verbix-conjugate-language='lat' data-verbix-conjugate-key='ab8e7bb5-9ac6-11e7-ab6a-00089be4dcbc'></div>
     <div id='tense-container' data-verbix-conjugate-tense='0'></div>
-    <div class="verbtable" id="verbixConjugations" data-verbix-conjugator-langid="1009" data-verbix-conjugator-iso="la" data-verbix-conjugator-backlink="1009" data-verbix-conjugator-verb="servus"></div>
+    <div class="verbtable" id="verbixConjugations" data-verbix-conjugator-langid="1009" data-verbix-conjugator-iso="la" data-verbix-conjugator-backlink="1009" data-verbix-conjugator-verb=""></div>
     <p id='result-container' class='result-container'></p>
 </body>
 </html>
