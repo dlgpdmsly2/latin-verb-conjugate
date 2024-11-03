@@ -54,7 +54,8 @@
 
         if (noun) {
             waitForElm('.verbtense').then((elm) => {
-                document.getElementById('result-container').innerHTML = elm[tense].rows[person].cells[1].innerText;
+                const tables = document.querySelectorAll('.columns-main table.verbtense');
+                document.getElementById('result-container').innerHTML = tables[tense].rows[person].cells[1].innerText;
             });
         }
         else {
