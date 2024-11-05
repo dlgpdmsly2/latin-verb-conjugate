@@ -91,14 +91,15 @@
             });
 
             // Display the results in 'alt-result-container'
-            const altResultContainer = document.getElementById('alt-result-container');
-            if (altResultContainer) {
-                altResultContainer.innerHTML = results.length > 0
+            waitForElm('.alt-result-container').then((elm) => {
+                const altResultContainer = document.getElementById('alt-result-container');
+                if (altResultContainer) {
+                    altResultContainer.innerHTML = results.length > 0
                     ? results.map(result => `<p>${result.table},${result.row}</p>`).join('')
                     : '';
-            }
+                }
+            });
         }
-        
     </script>
 </head>
 <body>
@@ -106,6 +107,6 @@
     <div id='tense-container' data-verbix-conjugate-tense='0'></div>
     <div class="verbtable" id="verbixConjugations" data-verbix-conjugator-langid="1009" data-verbix-conjugator-iso="la" data-verbix-conjugator-backlink="1009" data-verbix-conjugator-verb=""></div>
     <p id='result-container' class='result-container'></p>
-    <p id='alt-result-container'></p>
+    <p id='alt-result-container' class='alt-result-container></p>
 </body>
 </html>
