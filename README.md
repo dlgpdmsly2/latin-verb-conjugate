@@ -1,5 +1,6 @@
 # How to use
 Access https://dlgpdmsly2.github.io/latin-verb-conjugate/?verb=&tense=&person=&noun=
+The resulting conjugation is displayed inside `<p id='result-container'>`. 
 
 ## For nouns
 URL parameters:
@@ -43,8 +44,6 @@ URL parameters:
   \* These only return one string, so you do not have to assign a `person`. 
 
 * `person` a number between 0 and 5 in order of 1st, 2nd, 3rd person singular followed by plural.
-
-The resulting conjugation is displayed inside `<p id='result-container'>`, which can be fetched by parsing the HTML. 
 
 Hope this helps!
 
