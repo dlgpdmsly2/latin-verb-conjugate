@@ -56,6 +56,7 @@
             waitForElm('.verbtense').then((elm) => {
                 const tables = document.querySelectorAll('.columns-main table.verbtense');
                 document.getElementById('result-container').innerHTML = tables[tense].rows[person].cells[1].innerText;
+                findAlternatives();
             });
         }
         else {
@@ -64,6 +65,39 @@
             });
         }
         
+        function cleanText(text) {
+            return text.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Removes diacritics
+        }
+        
+        function findAlternatives() {
+            const tables = document.querySelectorAll('.columns-main table.verbtense');
+            const results = []; // Array to hold found occurrences with their index details
+
+            tables.forEach((table, tableIndex) => {
+                Array.from(table.rows).forEach((row, rowIndex) => {
+                    Array.from(row.cells).forEach((cell, cellIndex) => {
+                        const cellText = cell.innerText.trim();
+
+                        // Clean cell text and check if it matches result-container
+                        if (cleanText(cellText) === document.getElementById('result-container').innerHTML) {
+                            // Push the found occurrence with its table, row, and column indices
+                            results.push({
+                                table: tableIndex,
+                                row: rowIndex,
+                            });
+                        }
+                    });
+                });
+            });
+
+            // Display the results in 'alt-result-container'
+            const altResultContainer = document.getElementById('alt-result-container');
+            if (altResultContainer) {
+                altResultContainer.innerHTML = results.length > 0
+                    ? results.map(result => `<p>${result.table},${result.row}</p>`).join('')
+                    : '';
+            }
+        }
         
     </script>
 </head>
@@ -72,5 +106,6 @@
     <div id='tense-container' data-verbix-conjugate-tense='0'></div>
     <div class="verbtable" id="verbixConjugations" data-verbix-conjugator-langid="1009" data-verbix-conjugator-iso="la" data-verbix-conjugator-backlink="1009" data-verbix-conjugator-verb=""></div>
     <p id='result-container' class='result-container'></p>
+    <p id='alt-result-container'></p>
 </body>
 </html>
