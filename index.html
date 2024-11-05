@@ -65,9 +65,9 @@
             });
         }
         
-        function cleanText(text) {
-            return text.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Removes diacritics
-        }
+        // function cleanText(text) {
+          //   return text.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Removes diacritics
+        // }
         
         function findAlternatives() {
             const tables = document.querySelectorAll('.columns-main table.verbtense');
@@ -79,7 +79,8 @@
                         const cellText = cell.innerText.trim();
 
                         // Clean cell text and check if it matches result-container
-                        if (cleanText(cellText) === document.getElementById('result-container').innerHTML) {
+                        // if (cleanText(cellText) === document.getElementById('result-container').innerHTML) {
+                        if cellText === document.getElementById('result-container').innerHTML) {
                             // Push the found occurrence with its table, row, and column indices
                             results.push({
                                 table: tableIndex,
