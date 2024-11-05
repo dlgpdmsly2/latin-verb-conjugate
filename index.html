@@ -65,9 +65,9 @@
             });
         }
         
-        // function cleanText(text) {
-          //   return text.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Removes diacritics
-        // }
+        function cleanText(text) {
+            return text.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Removes diacritics
+        }
         
         function findAlternatives() {
             const tables = document.querySelectorAll('.columns-main table.verbtense');
@@ -79,8 +79,7 @@
                         const cellText = cell.innerText.trim();
 
                         // Clean cell text and check if it matches result-container
-                        // if (cleanText(cellText) === document.getElementById('result-container').innerHTML) {
-                        if (cellText === document.getElementById('result-container').innerHTML) {
+                        if (cleanText(cellText) === document.getElementById('result-container').innerHTML) {
                             // Push the found occurrence with its table, row, and column indices
                             results.push({
                                 table: tableIndex,
@@ -92,15 +91,14 @@
             });
 
             // Display the results in 'alt-result-container'
-            waitForElm('.alt-result-container').then((elm) => {
-                const altResultContainer = document.getElementById('alt-result-container');
-                if (altResultContainer) {
-                    altResultContainer.innerHTML = results.length > 0
+            const altResultContainer = document.getElementById('alt-result-container');
+            if (altResultContainer) {
+                altResultContainer.innerHTML = results.length > 0
                     ? results.map(result => `<p>${result.table},${result.row}</p>`).join('')
                     : '';
-                }
-            });
+            }
         }
+        
     </script>
 </head>
 <body>
@@ -108,6 +106,6 @@
     <div id='tense-container' data-verbix-conjugate-tense='0'></div>
     <div class="verbtable" id="verbixConjugations" data-verbix-conjugator-langid="1009" data-verbix-conjugator-iso="la" data-verbix-conjugator-backlink="1009" data-verbix-conjugator-verb=""></div>
     <p id='result-container' class='result-container'></p>
-    <p id='alt-result-container' class='alt-result-container></p>
+    <p id='alt-result-container'></p>
 </body>
 </html>
